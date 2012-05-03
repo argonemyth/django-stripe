@@ -14,7 +14,8 @@ setup(
     author = 'Andrew McCloud',
     author_email = 'andrew@amccloud.com',
     url = 'https://github.com/amccloud/django-stripe/',
-    packages = ['django_stripe'],
+    packages = ['django_stripe', 'django_stripe.contrib', 'django_stripe.contrib.registration', 'django_stripe.management', 'django_stripe.management.commands'],
+    package_data={'django_stripe': ['templates/django_stripe/*']},
     classifiers = [
           'Programming Language :: Python :: 2',
     ],

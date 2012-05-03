@@ -31,6 +31,9 @@ class BaseCardTokenFormView(FormView):
 class WebhookSignalView(View):
     http_method_names = ['post']
     event_signals = {
+        'charge.succeeded': ping,
+        'charge.failed': ping,
+        'charge.refunded': ping,
         'recurring_payment_failed': recurring_payment_failed,
         'invoice_ready': invoice_ready,
         'recurring_payment_succeeded': recurring_payment_succeeded,
