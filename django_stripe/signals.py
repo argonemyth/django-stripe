@@ -45,6 +45,12 @@ subscription_created = Signal(providing_args=[
     'plan'
 ])
 
+subscription_updated = Signal(providing_args=[
+    'customer',
+    'status',
+    'cancel_at_period_end'
+])
+
 subscription_deleted = Signal(providing_args=[
     'customer',
     'status',

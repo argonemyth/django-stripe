@@ -39,6 +39,7 @@ class WebhookSignalView(View):
         'customer.created': customer_created,
         'customer.deleted': customer_deleted,
         'customer.subscription.created': subscription_created,
+        'customer.subscription.updated': subscription_updated,
         'customer.subscription.deleted': subscription_deleted,
         'customer.subscription.trial_will_end': subscription_trial_will_end,
         'invoice.created': invoice_created,
