@@ -23,12 +23,12 @@ def make_widget_anonymous(widget):
     return widget
 
 class CardForm(forms.Form):
-    number = forms.CharField(label=_("Card number"))
-    exp_month = forms.CharField(label=_("Expiration month"), widget=forms.Select(choices=MONTH_CHOICES))
-    exp_year = forms.CharField(label=_("Expiration year"), widget=forms.Select(choices=YEAR_CHOICES))
+    number = forms.CharField(label=_("Card number"), required=False)
+    exp_month = forms.CharField(label=_("Expiration month"), required=False, widget=forms.Select(choices=MONTH_CHOICES))
+    exp_year = forms.CharField(label=_("Expiration year"), required=False, widget=forms.Select(choices=YEAR_CHOICES))
 
     def get_cvc_field(self):
-        return forms.CharField(label=_("Security code (CVV)"))
+        return forms.CharField(label=_("Security code (CVC)"), required=False)
 
     def get_address_line1_field(self):
         return forms.CharField(label=_("Address"))
