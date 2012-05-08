@@ -47,8 +47,7 @@ subscription_created = Signal(providing_args=[
 
 subscription_updated = Signal(providing_args=[
     'customer',
-    'status',
-    'cancel_at_period_end'
+    'plan',
 ])
 
 subscription_deleted = Signal(providing_args=[
@@ -82,6 +81,7 @@ invoice_payment_failed = Signal(providing_args=[
     'livemode',
 ])
 """
+# Below are for webhook V1
 upcoming_invoice_updated = Signal(providing_args=['customer'])
 recurring_payment_failed = Signal(providing_args=[
     'customer',
