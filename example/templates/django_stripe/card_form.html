@@ -1,8 +1,8 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-<form method="post" action=".">
+<form id="stripe-card-form" method="post" action=".">
     {% csrf_token %}
     <noscript>This form requires Javascript to use.</noscript>
-    <p id="id_stripe-token-widget">
+    <p id="id_stripe-token">
         <div id="stripe-create-token-form" {% if form.last4.value %}style="display: none;"{% endif %}>
             {{ form.as_p }}
         </div>

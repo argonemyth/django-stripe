@@ -11,9 +11,9 @@ charge_succeeded = Signal(providing_args=[
 
 charge_failed = Signal(providing_args=[ 
     'customer',
-    'invoice',
     'amount',
-    'livemode',
+    'failure_message',
+    'card',
 ])
 
 charge_refunded = Signal(providing_args=[ 
@@ -39,21 +39,23 @@ customer_deleted = Signal(providing_args=[
 
 subscription_created = Signal(providing_args=[
     'customer',
-    'status',
-    'trail_start',
+    'current_period_end',
+    'start',
     'cancel_at_period_end',
     'plan'
 ])
 
 subscription_updated = Signal(providing_args=[
     'customer',
+    'cancel_at_period_end', #this value determins if an user cancelled the plan or not
     'plan',
+    'canceled_at',
 ])
 
 subscription_deleted = Signal(providing_args=[
     'customer',
     'status',
-    'cancel_at_period_end'
+    'ended_at',
 ])
 
 subscription_trial_will_end = Signal(providing_args=[
@@ -73,6 +75,10 @@ invoice_updated = Signal(providing_args=['invoice']) #modify
 
 invoice_payment_succeeded = Signal(providing_args=[
     'customer',
+    'total',
+    'date',
+    'period_end',
+    'discount',
     'livemode',
 ])
 
