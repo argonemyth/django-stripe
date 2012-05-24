@@ -31,26 +31,14 @@ class BaseCardTokenFormView(FormView):
         return kwargs
 
 class WebhookSignalView(View):
+    """
+    Handles all known webhooks (v2) from stripe, and calls signals.
+    Plug in as you need.
+    """
     http_method_names = ['post']
-    event_signals = {
-        'charge.succeeded': charge_succeeded,
-        'charge.failed': charge_failed,
-        'charge.refunded': charge_refunded,
-        'customer.created': customer_created,
-        'customer.deleted': customer_deleted,
-        'customer.subscription.created': subscription_created,
-        'customer.subscription.updated': subscription_updated,
-        'customer.subscription.deleted': subscription_deleted,
-        'customer.subscription.trial_will_end': subscription_trial_will_end,
-        'invoice.created': invoice_created,
-        'invoice.updated': invoice_updated,
-        'invoice.payment_succeeded': invoice_payment_succeeded,
-        'invoice.payment_failed': invoice_payment_failed,
-        'ping': ping,
-    }
 
     def post(self, request, *args, **kwargs):
-        logger.debug("Got Post Request in WebhookSignalView - New signals")
+        #logger.debug("Got Post Request in WebhookSignalView - New signals")
         try:
             message = json.loads(request.raw_post_data)
             #logger.debug("Got webhook msg: %s" % message)
@@ -61,23 +49,10 @@ class WebhookSignalView(View):
 
         event = message[u'type']
         logger.debug("Got webhook event: %s" % event)
-
-        if event not in self.event_signals:
-            logger.debug("webhook event not found.")
-            raise Http404
-
-        try:
-            for key, value in message.iteritems():
-                if isinstance(value, dict) and 'object' in value:
-                    logger.debug(message[key])
-                    #message[key] = convert_to_stripe_object(value, STRIPE_SECRET_KEY)
-        except Exception as e:
-            logger.error("Exception occurred: %s" % e)
-
-        """
-        signal = self.event_signals.get(event)
-        signal.send_robust(sender=StripeWebhook, **message)
-        """
+        signal = eval(event.replace('.', '_')) 
+        if signal:
+            sig_resp = signal.send_robust(sender=StripeWebhook, full_json=message)
+            logger.debug("Signal Sent: %s" % sig_resp)
 
         return HttpResponse(status=200)
 
